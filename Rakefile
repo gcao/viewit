@@ -1,3 +1,5 @@
+$:.push(File.dirname(__FILE__) + '/lib')
+
 require 'rubygems'
 require 'rake'
 
@@ -5,8 +7,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "viewit"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Viewit}
+    gem.description = %Q{Experimenting idea of generating html from model}
     gem.email = "gcao99@gmail.com"
     gem.homepage = "http://github.com/gcao/viewit"
     gem.authors = ["Guoliang Cao"]
@@ -32,8 +34,6 @@ end
 
 task :spec => :check_dependencies
 
-task :default => :spec
-
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
@@ -42,4 +42,12 @@ Rake::RDocTask.new do |rdoc|
   rdoc.title = "viewit #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+task :default do
+  require 'viewit'
+  template = "spec/test.haml"
+  json     = JSON.parse("spec/test.json")
+  output   = "tmp/output.html"
+  Viewit.new(template).apply(json).render(output)
 end
