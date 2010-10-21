@@ -12,9 +12,26 @@
     "message_count": 0
   },
   "current_gist": {
-    "id": 566725,
+    "_id": "566725",
     "description": "How to use Rails 3.0's new notification system to inject custom log events",
-    "public_clone_url": "git://gist.github.com/566725.git"
+    "public_clone_url": "git://gist.github.com/566725.git",
+    "owner": {
+      "username": "mnutt",
+      "logo_url": "test_files/93bd250c06436d254229792b44b2d677.jpg",
+      "view_url": "http://github.com/mnutt"
+    },
+    "forks": [
+      {
+        "_id": "613672",
+        "view_url": "http://gist.github.com/613672",
+        "created_at": "2010-10-06 09:55:49",
+        "created_at_alias": "October 06, 2010",
+        "owner": {
+          "username": "rbazinet",
+          "view_url": "http://gist.github.com/rbazinet"
+        }
+      }
+    ]
   },
   "gist_homepage_url": "http://gist.github.com/",
   "my_gists_url": "http://gist.github.com/mine",
@@ -42,6 +59,9 @@
     "my_gists_link_label": "My Gists",
     "starred_gists_link_label": "Starred Gists",
     "all_gists_link_label": "All Gists",
-    "back_to_github_link_label": "Back to GitHub"
+    "back_to_github_link_label": "Back to GitHub",
+    "gist_owner_label": "(owner)",
+    "forks_label": "Forks",
+    "revisions_label": "Revisions"
   }
 }

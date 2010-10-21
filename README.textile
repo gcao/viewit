@@ -22,6 +22,18 @@ h3. Idea - separate data and presentation logic in web page
    might be good)
  * Mapping between data item and DOM can be maintained (is this required for some
    operations?)
+ * Sub model can be referenced in other part of the data model, e.g.
+<pre>
+  {
+    "user": {
+      "ref": "user.test",
+      "username": "test"
+    },
+    "comment": {
+      "author": {"deref": "user.test"}
+    }
+  }
+</pre>
 
 h3. Prototype of above idea
 
