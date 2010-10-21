@@ -1,15 +1,47 @@
 {
+  "homepage_url": "http://github.com",
+  "logout_url": "http://github.com/logout",
   "title": "gist: 566725 - How to use Rails 3.0's new notification system to inject custom log events- GitHub",
   "logged_in_user": {
     "username": "gcao",
-    "logo": "test_files/6f67bf7db5209823d24a3720746047f6.jpg",
+    "logo_url": "test_files/6f67bf7db5209823d24a3720746047f6.jpg",
+    "view_url": "http://github.com/gcao",
+    "account_url": "http://github.com/account",
+    "dashboard_url": "http://github.com",
+    "inbox_url": "http://github.com/inbox",
+    "message_count": 0
   },
   "current_gist": {
     "id": 566725,
     "description": "How to use Rails 3.0's new notification system to inject custom log events",
     "public_clone_url": "git://gist.github.com/566725.git"
   },
-  "links": {
-    "homepage": "http://github.com",
+  "gist_homepage_url": "http://gist.github.com/",
+  "my_gists_url": "http://gist.github.com/mine",
+  "starred_gists_url": "http://gist.github.com/starred",
+  "all_gists_url": "http://gist.github.com/gists",
+  "gist_search_form": {
+    "action": "/gists/search",
+    "method": "get",
+    "fields": {
+      "q": {
+        "type": "text"
+      },
+      "page": {
+        "type": "hidden"
+      }
+    }
+  },
+  "messages": {
+    "dashboard_link_label": "Dashboard",
+    "inbox_link_label": "Inbox",
+    "settings_link_label": "Account Settings",
+    "logout_link_label": "Log Out",
+    "gist_search_input_floating_text": "Search Gists\342\200\246",
+    "new_gist_link_label": "New Gist",
+    "my_gists_link_label": "My Gists",
+    "starred_gists_link_label": "Starred Gists",
+    "all_gists_link_label": "All Gists",
+    "back_to_github_link_label": "Back to GitHub"
   }
 }

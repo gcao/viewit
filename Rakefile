@@ -45,9 +45,14 @@ Rake::RDocTask.new do |rdoc|
 end
 
 task :default do
+  require 'json'
   require 'viewit'
-  template = "spec/test.haml"
-  json     = JSON.parse("spec/test.json")
+  
+  template = File.read("spec/template.html.haml")
+  json     = JSON.parse(File.read("spec/test.json"))
   output   = "tmp/output.html"
-  Viewit.new(template).apply(json).render(output)
+  
+  puts "==================\n\n"
+  puts Viewit.new(template).apply(json).render(output)
+  puts "\n\n==================\n"
 end
