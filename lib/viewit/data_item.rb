@@ -66,6 +66,18 @@ module Viewit
       def [] index
         DataItem.create(@input[index])
       end
+      
+      def each
+        @input.each do |item|
+          yield DataItem.create(item)
+        end
+      end
+      
+      def each_with_index
+        @input.each_with_index do |item, i|
+          yield DataItem.create(item), i
+        end
+      end
     end
   end
 end

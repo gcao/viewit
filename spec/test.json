@@ -56,7 +56,7 @@
   "all_gists_url": "http://gist.github.com/gists",
   "gist_search_form": {
     "action": "/gists/search",
-    "method": "get",
+    "_method": "get",
     "fields": {
       "q": {
         "type": "text"

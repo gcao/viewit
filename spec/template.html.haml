@@ -29,93 +29,93 @@
       #header
         .site
           .logo
-            %a{:href => self["gist_homepage_url"]}
+            %a{:href => gist_homepage_url}
               %img{:alt => "gist", :src => "test_files/logo_gist.png"}/
           .userbox
             .avatarname
-              %a{:href => self["logged_in_user"]["view_url"]}
-                %img{:alt => "", :height => "20", :src => self["logged_in_user"]["logo_url"], :width => "20"}/
-              %a.name{:href => self["logged_in_user"]["view_url"]}= self["logged_in_user"]["username"]
+              %a{:href => logged_in_user.view_url}
+                %img{:alt => "", :height => "20", :src => logged_in_user.logo_url, :width => "20"}/
+              %a.name{:href => logged_in_user.view_url}= logged_in_user.username
             %ul.usernav
               %li
-                %a{:href => self["logged_in_user"]["dashboard_url"]}= self["messages"]["dashboard_link_label"]
+                %a{:href => logged_in_user.dashboard_url}= messages.dashboard_link_label
               %li
-                %a{:href => self["logged_in_user"]["inbox_url"]}= self["messages"]["inbox_link_label"]
-                %a.unread_count{:href => self["logged_in_user"]["inbox_url"]}= self["logged_in_user"]["message_count"]
+                %a{:href => logged_in_user.inbox_url}= messages.inbox_link_label
+                %a.unread_count{:href => logged_in_user.inbox_url}= logged_in_user.message_count
               %li
-                %a{:href => self["logged_in_user"]["view_url"]}= self["messages"]["settings_link_label"]
+                %a{:href => logged_in_user.view_url}= messages.settings_link_label
               %li
-                %a{:href => self["logout_url"]}= self["messages"]["logout_link_label"]
+                %a{:href => logout_url}= messages.logout_link_label
           / /.userbox
           .topsearch
-            %form#top_search_form{:action => self["gist_search_form"]["action"], :method => self["gist_search_form"]["method"]}
-              %input.search.notnative.placeholder{:name => "q", :placeholder => self["messages"]["gist_search_input_floating_text"], :results => "5", :type => "search"}/
+            %form#top_search_form{:action => gist_search_form.action, :method => gist_search_form._method}
+              %input.search.notnative.placeholder{:name => "q", :placeholder => messages.gist_search_input_floating_text, :results => "5", :type => "search"}/
               %input.button{:type => "submit", :value => "Search"}/
               %input{:name => "page", :type => "hidden", :value => "1"}/
             %ul.nav
               %li
-                %a{:href => self["gist_homepage_url"]}= self["messages"]["new_gist_link_label"]
+                %a{:href => gist_homepage_url}= messages.new_gist_link_label
               %li
-                %a{:href => self["my_gists_url"]}= self["messages"]["my_gists_link_label"]
+                %a{:href => my_gists_url}= messages.my_gists_link_label
               %li
-                %a{:href => self["starred_gists_url"]}= self["messages"]["starred_gists_link_label"]
+                %a{:href => starred_gists_url}= messages.starred_gists_link_label
               %li
-                %a{:href => self["all_gists_url"]}= self["messages"]["all_gists_link_label"]
+                %a{:href => all_gists_url}= messages.all_gists_link_label
               %li
-                %a{:href => self["homepage_url"]}= self["messages"]["back_to_github_link_label"]
+                %a{:href => homepage_url}= messages.back_to_github_link_label
           / /.topsearch
       .site
         .secondary
           #owner
             .actor
               .gravatar
-                %img{:alt => "", :height => "30", :src => self["current_gist"]["owner"]["logo_url"], :width => "30"}/
+                %img{:alt => "", :height => "30", :src => current_gist.owner.logo_url, :width => "30"}/
               .name
-                %a{:href => self["current_gist"]["owner"]["view_url"]}= self["current_gist"]["owner"]["username"]
-                %span= self["messages"]["gist_owner_label"]
+                %a{:href => current_gist.owner.view_url}= current_gist.owner.username
+                %span= messages.gist_owner_label
           #forks.fork-info
-            %h3= self["messages"]["forks_label"]
+            %h3= messages.forks_label
             %ul.gists.forks
-              - self["current_gist"]["forks"].each do |fork|
-                %li= render_with_hash(self["messages"]["gist_item"],      |
-                  :_id => self["current_gist"]["_id"],                    |
-                  :user => self["current_gist"]["owner"]["username"],     |
-                  :user_url => self["current_gist"]["owner"]["view_url"], |
-                  :created_at => fork["created_at"],                      |
-                  :created_at_alias => fork["created_at_alias"])          |
+              - current_gist.forks do |fork|
+                %li= render_with_hash(messages.gist_item,     |
+                  :_id => current_gist._id,                   |
+                  :user => current_gist.owner.username,       |
+                  :user_url => current_gist.owner.view_url,   |
+                  :created_at => fork.created_at,             |
+                  :created_at_alias => fork.created_at_alias) |
           #revisions
-            %h3= self["messages"]["revisions_label"]
+            %h3= messages.revisions_label
             %ul
-              - self["current_gist"]["revisions"].each_with_index do |rev, i|
+              - current_gist.revisions.each_with_index do |rev, i|
                 %li{:class => (i == 0 ? "current" : "other")}
-                  - rev["changes_abbr"].each_char do |char|
+                  - rev.changes_abbr.input.each_char do |char|
                     - color = char == "+" ? "green" : (char == "-" ? "red" : "gray")
                     %img{:alt => "", :src => "test_files/dot_#{color}.png"}/
-                  %a.id{:href => rev["view_url"]}= rev["_id"]
-                  %a.author{:href => rev["owner"]["view_url"]}= rev["owner"]["username"]
+                  %a.id{:href => rev.view_url}= rev._id
+                  %a.author{:href => rev.owner.view_url}= rev.owner.username
                   %span.date
-                    %abbr.relatize.relatized{:title => rev["created_at"]}= rev["created_at_alias"]
+                    %abbr.relatize.relatized{:title => rev.created_at}= rev.created_at_alias
         / /.secondary
         .main
           #repos
             .repo.public
               .title
                 .path
-                  #{self["messages"]["gist_label"]} #{self["current_gist"]["_id"]}
-                  %a{:href => self["current_gist"]["download_url"]}
+                  #{messages.gist_label} #{current_gist._id}
+                  %a{:href => current_gist.download_url}
                     %img.button{:alt => "Download_button", :border => "0", :src => "test_files/download_button.png"}/
-                  %a{:href => self["current_gist"]["fork_url"]}
+                  %a{:href => current_gist.fork_url}
                     %img.button{:alt => "fork", :src => "test_files/fork_button.png"}/
-                  %a{:href => self["current_gist"]["star_url"]}
+                  %a{:href => current_gist.star_url}
                     %img.button{:alt => "star", :src => "test_files/star_button.png"}/
-                - if self["current_gist"]["is_public"]
+                - if current_gist.is_public
                   .security.public_security{:style => ""}
                     %a{:href => "#public_repo", :rel => "facebox"}
                       %img{:alt => "public", :src => "test_files/public.png"}/
                 #private_repo.hidden
-                  = self["messages"]["private_gist_desc"]
+                  = messages.private_gist_desc
                 #public_repo.hidden
-                  = self["messages"]["public_gist_desc"]
+                  = messages.public_gist_desc
               .meta
                 %table
                   %tbody

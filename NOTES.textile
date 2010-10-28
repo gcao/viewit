@@ -1,0 +1,1 @@
+ * How to avoid property name and method name collision: e.g. method, size, length
