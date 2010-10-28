@@ -1,8 +1,30 @@
 module Viewit
   class DataItem
-    def initialize input = nil
+    attr :input
+    
+    def initialize input
+      @input = input
+    end
+    
+    def eql? other
+      @input.eql?(other.input)
+    end
+    
+    def == other
+      @input == other.input
+    end
+    
+    def hash
+      @input.hash
+    end
+    
+    def to_s
+      @input.to_s
+    end
+    
+    def self.create input = nil
       case input
-      when nil
+      when NilClass
         EmptyData.new input
       when Fixnum, String
         LiteralData.new input
@@ -15,27 +37,32 @@ module Viewit
       end
     end
     
-    # Special data item class for nil
+    # Special data item class for nil, can be used in place of 
+    # HashData or ArrayData
     class EmptyData < DataItem
-      def initialize input
+      def method_missing method, *args
+        DataItem.create
       end
+      
+      def size; 0; end
+      def length; 0; end
     end
     
     # number/string/...
     class LiteralData < DataItem
-      def initialize input
-      end
     end
     
     # hash data
     class HashData < DataItem
-      def initialize input
+      def method_missing method, *args
+        DataItem.create(@input[method])
       end
     end
     
     # array
     class ArrayData < DataItem
-      def initialize input
+      def [] index
+        DataItem.create(@input[index])
       end
     end
   end

@@ -11,6 +11,7 @@
     %script{:src => "test_files/jquery-1.js", :type => "text/javascript"}
     %script{:src => "test_files/bundle_common.js", :type => "text/javascript"}
     %script{:src => "test_files/bundle_gist.js", :type => "text/javascript"}
+    -# TODO
     %link{:href => "http://github.com/api/oembed?format=json&amp;url=http%3A%2F%2Fgist.github.com%2F566725", :rel => "alternate", :title => "gist: 566725", :type => "application/json+oembed"}/
     :javascript
       var _gaq = _gaq || [];
@@ -22,7 +23,7 @@
         ga.setAttribute('async', 'true');
         document.documentElement.firstChild.appendChild(ga);
       })();
-        %script{:async => "true", :src => "test_files/ga.js"}
+    %script{:async => "true", :src => "test_files/ga.js"}
   %body.usingMouse
     #main
       #header
