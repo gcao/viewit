@@ -18,7 +18,8 @@ module Viewit
   
     def render file = nil
       @compiled_template ||= Haml::Engine.new(@template)
-      result = @compiled_template.render @model
+      context = DataItem.create(@model)
+      result = @compiled_template.render context 
     
       unless file.nil?
         File.open(file, "w") do |f|

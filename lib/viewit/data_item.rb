@@ -7,10 +7,12 @@ module Viewit
     end
     
     def eql? other
+      return false unless other.is_a? DataItem
       @input.eql?(other.input)
     end
     
     def == other
+      return false unless other.is_a? DataItem
       @input == other.input
     end
     
@@ -26,7 +28,7 @@ module Viewit
       case input
       when NilClass
         EmptyData.new input
-      when Fixnum, String
+      when Fixnum, String, TrueClass, FalseClass
         LiteralData.new input
       when Array
         ArrayData.new input
@@ -55,7 +57,7 @@ module Viewit
     # hash data
     class HashData < DataItem
       def method_missing method, *args
-        DataItem.create(@input[method])
+        DataItem.create(@input[method.to_s])
       end
     end
     
