@@ -53,6 +53,6 @@ task :default do
   output   = "spec/test-output.html"
   
   puts "==================\n\n"
-  puts Viewit.new(template).apply(json).render(output)
+  puts Viewit.compile(template).apply(json).render(output)
   puts "\n\n==================\n"
 end

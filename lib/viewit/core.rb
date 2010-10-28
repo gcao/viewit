@@ -1,27 +1,33 @@
 require 'haml'
 require 'erubis'
 
-class Viewit
-  def initialize template
-    @template = template
+module Viewit
+  def self.compile template
+    Core.new template
   end
   
-  def apply model
-    @model = model
-    self
-  end
-  
-  def render file = nil
-    @compiled_template ||= Haml::Engine.new(@template)
-    result = @compiled_template.render @model
-    
-    unless file.nil?
-      File.open(file, "w") do |f|
-        f.write result
-      end
+  class Core
+    def initialize template
+      @template = template
     end
+  
+    def apply model
+      @model = model
+      self
+    end
+  
+    def render file = nil
+      @compiled_template ||= Haml::Engine.new(@template)
+      result = @compiled_template.render @model
+    
+      unless file.nil?
+        File.open(file, "w") do |f|
+          f.write result
+        end
+      end
 
-    result
+      result
+    end
   end
 end
 
