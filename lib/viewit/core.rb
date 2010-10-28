@@ -1,4 +1,5 @@
 require 'haml'
+require 'erubis'
 
 class Viewit
   def initialize template
@@ -21,5 +22,12 @@ class Viewit
     end
 
     result
+  end
+end
+
+class Object
+  def render_with_hash template, hash
+    return 'TEMPLATE_NOT_DEFINED' if template.nil?
+    Erubis::Eruby.new(template).result(hash)
   end
 end

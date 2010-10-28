@@ -37,12 +37,12 @@
               %a.name{:href => self["logged_in_user"]["view_url"]}= self["logged_in_user"]["username"]
             %ul.usernav
               %li
-                %a{:href => self["logged_in_user"]["dashboard_url"]}= self["logged_in_user"]
+                %a{:href => self["logged_in_user"]["dashboard_url"]}= self["messages"]["dashboard_link_label"]
               %li
                 %a{:href => self["logged_in_user"]["inbox_url"]}= self["messages"]["inbox_link_label"]
                 %a.unread_count{:href => self["logged_in_user"]["inbox_url"]}= self["logged_in_user"]["message_count"]
               %li
-                %a{:href => self["logged_in_user"]["view_url"]}= self["messages"]["messages_link_label"]
+                %a{:href => self["logged_in_user"]["view_url"]}= self["messages"]["settings_link_label"]
               %li
                 %a{:href => self["logout_url"]}= self["messages"]["logout_link_label"]
           / /.userbox
@@ -76,136 +76,63 @@
             %h3= self["messages"]["forks_label"]
             %ul.gists.forks
               - self["current_gist"]["forks"].each do |fork|
-                %li
-                  %a{:href => fork["view_url"]}= "gist: " + fork["_id"]
-                  by
-                  %a{:href => fork["owner"]["view_url"]}= fork["owner"]["username"]
-                  %span.description
-                  %small
-                    created
-                    %span.date
-                      %abbr.relatize.relatized{:title => fork["created_at"]}= fork["created_at_alias"]
+                %li= render_with_hash(self["messages"]["gist_item"],      |
+                  :_id => self["current_gist"]["_id"],                    |
+                  :user => self["current_gist"]["owner"]["username"],     |
+                  :user_url => self["current_gist"]["owner"]["view_url"], |
+                  :created_at => fork["created_at"],                      |
+                  :created_at_alias => fork["created_at_alias"])          |
           #revisions
             %h3= self["messages"]["revisions_label"]
             %ul
-              %li.current
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %a.id{:href => "http://gist.github.com/566725/636766f1a8510723ddaa5eef1c78cecd2054075a"} 636766
-                %a.author{:href => "http://gist.github.com/mnutt"} mnutt
-                %span.date
-                  %abbr.relatize.relatized{:title => "2010-10-06 10:13:54"} October 06, 2010
-              %li.other
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %a.id{:href => "http://gist.github.com/566725/964f16e11f79c8e7cacfc02e185f87be15dc7f5a"} 964f16
-                %a.author{:href => "http://gist.github.com/mnutt"} mnutt
-                %span.date
-                  %abbr.relatize.relatized{:title => "2010-09-09 13:56:36"} September 09, 2010
-              %li.other
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %a.id{:href => "http://gist.github.com/566725/b19b3fde342d86866c943ce24dfa70d1a2ad23e8"} b19b3f
-                %a.author{:href => "http://gist.github.com/mnutt"} mnutt
-                %span.date
-                  %abbr.relatize.relatized{:title => "2010-09-09 13:53:34"} September 09, 2010
-              %li.other
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %a.id{:href => "http://gist.github.com/566725/c5c4f7ee440dc5fc4798e6f366e2b172d004447e"} c5c4f7
-                %a.author{:href => "http://gist.github.com/mnutt"} mnutt
-                %span.date
-                  %abbr.relatize.relatized{:title => "2010-09-09 13:41:36"} September 09, 2010
-              %li.other
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %a.id{:href => "http://gist.github.com/566725/17801623d78e38419366aa4814f4890e56105b5f"} 178016
-                %a.author{:href => "http://gist.github.com/mnutt"} mnutt
-                %span.date
-                  %abbr.relatize.relatized{:title => "2010-09-09 13:41:01"} September 09, 2010
-              %li.other
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %a.id{:href => "http://gist.github.com/566725/1b121fb75e41ca9e64f1068bf8a3ea7d3555c2dc"} 1b121f
-                %a.author{:href => "http://gist.github.com/mnutt"} mnutt
-                %span.date
-                  %abbr.relatize.relatized{:title => "2010-09-09 13:20:13"} September 09, 2010
-              %li.other
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %a.id{:href => "http://gist.github.com/566725/e5a5f640623f5b7916ff4c445af3d72fe379778f"} e5a5f6
-                %a.author{:href => "http://gist.github.com/mnutt"} mnutt
-                %span.date
-                  %abbr.relatize.relatized{:title => "2010-09-09 13:19:06"} September 09, 2010
-              %li.other
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %a.id{:href => "http://gist.github.com/566725/7e1557c97d02bb026c274ed865b2b3b110f788cd"} 7e1557
-                %a.author{:href => "http://gist.github.com/mnutt"} mnutt
-                %span.date
-                  %abbr.relatize.relatized{:title => "2010-09-06 12:18:58"} September 06, 2010
-              %li.other
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %a.id{:href => "http://gist.github.com/566725/25978243fbcda7a44ee29a09b5e5b265c28f945b"} 259782
-                %a.author{:href => "http://gist.github.com/mnutt"} mnutt
-                %span.date
-                  %abbr.relatize.relatized{:title => "2010-09-06 12:16:28"} September 06, 2010
-              %li.other
-                %img{:alt => "", :src => "test_files/dot_green.png"}/
-                %img{:alt => "", :src => "test_files/dot_red.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %img{:alt => "", :src => "test_files/dot_gray.png"}/
-                %a.id{:href => "http://gist.github.com/566725/fc1524333a44f8f691b7bfc050fe009a80659bd3"} fc1524
-                %a.author{:href => "http://gist.github.com/mnutt"} mnutt
-                %span.date
-                  %abbr.relatize.relatized{:title => "2010-09-06 12:06:17"} September 06, 2010
+              - self["current_gist"]["revisions"].each_with_index do |rev, i|
+                %li{:class => (i == 0 ? "current" : "other")}
+                  - rev["changes_abbr"].each_char do |char|
+                    - color = char == "+" ? "green" : (char == "-" ? "red" : "gray")
+                    %img{:alt => "", :src => "test_files/dot_#{color}.png"}/
+                  %a.id{:href => rev["view_url"]}= rev["_id"]
+                  %a.author{:href => rev["owner"]["view_url"]}= rev["owner"]["username"]
+                  %span.date
+                    %abbr.relatize.relatized{:title => rev["created_at"]}= rev["created_at_alias"]
         / /.secondary
+        .main
+          #repos
+            .repo.public
+              .title
+                .path
+                  #{self["messages"]["gist_label"]} #{self["current_gist"]["_id"]}
+                  %a{:href => self["current_gist"]["download_url"]}
+                    %img.button{:alt => "Download_button", :border => "0", :src => "test_files/download_button.png"}/
+                  %a{:href => self["current_gist"]["fork_url"]}
+                    %img.button{:alt => "fork", :src => "test_files/fork_button.png"}/
+                  %a{:href => self["current_gist"]["star_url"]}
+                    %img.button{:alt => "star", :src => "test_files/star_button.png"}/
+                - if self["current_gist"]["is_public"]
+                  .security.public_security{:style => ""}
+                    %a{:href => "#public_repo", :rel => "facebox"}
+                      %img{:alt => "public", :src => "test_files/public.png"}/
+                #private_repo.hidden
+                  = self["messages"]["private_gist_desc"]
+                #public_repo.hidden
+                  = self["messages"]["public_gist_desc"]
+              .meta
+                %table
+                  %tbody
+                    %tr
+                      %td.label Description:
+                      %td
+                        .description
+                          %span#gist-text-description.edit How to use Rails 3.0's new notification system to inject custom log events
+                    %tr
+                      %td.label Public Clone URL:
+                      %td
+                        %a.git_url_facebox{:href => "git://gist.github.com/566725.git", :rel => "#git-clone"} git://gist.github.com/566725.git
+                        #git-clone{:style => "display: none; min-width: 500px;"}
+                          Give this clone URL to anyone.
+                          %br/
+                          %code git clone git://gist.github.com/566725.git gist-566725
+                    %tr
+                      %td.label Embed All Files:
+                      %td
+                        %a.gist-embed-link{:href => "#"} show embed
+                        %input.gist-embed-box{:size => "25", :style => "display: none;", :type => "text", :value => "&lt;script src=&quot;http://gist.github.com/566725.js&quot;&gt; &lt;/script&gt;"}/

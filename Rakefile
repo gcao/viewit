@@ -50,7 +50,7 @@ task :default do
   
   template = File.read("spec/template.html.haml")
   json     = JSON.parse(File.read("spec/test.json"))
-  output   = "tmp/output.html"
+  output   = "spec/test-output.html"
   
   puts "==================\n\n"
   puts Viewit.new(template).apply(json).render(output)
