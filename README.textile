@@ -34,6 +34,15 @@ h3. Idea - separate data and presentation logic in web page
     }
   }
 </pre>
+ * All data item should be navigatable
+ * MVC - model contains data, model is presented in view, controller is mostly driven by
+   user doing something on the view(controller action can also be initiated spontaneously).
+ * Should support component tree architecture, top component is the web page itself.
+   Sub components are responsible for parts of the page. Ideally they can be embedded
+   in a traditional web page.
+ * Since one model can be used in multiple places in views, it's probably a good idea
+   to implement event(e.g. updated, created, deleted) and event handler to update multiple
+   views at the same time.
 
 h3. Prototype of above idea
 
