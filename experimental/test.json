@@ -80,20 +80,7 @@
   "my_gists_url": "http://gist.github.com/mine",
   "starred_gists_url": "http://gist.github.com/starred",
   "all_gists_url": "http://gist.github.com/gists",
-  "gist_search_form": {
-    "action": "/gists/search",
-    "_method": "get",
-    "fields": [
-      {
-        "name": "q",
-        "type": "text"
-      },
-      {
-        "name": "page",
-        "type": "hidden"
-      }
-    ]
-  },
+  "gist_search_url": "/gists/search",
   "messages": {
     "dashboard_link_label": "Dashboard",
     "inbox_link_label": "Inbox",

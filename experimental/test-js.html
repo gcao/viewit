@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='content-type' />
+    <meta content='chrome=1' http-equiv='X-UA-Compatible' />
+    <title>gist: 566725 - How to use Rails 3.0's new notification system to inject custom log events- GitHub</title>
+    <link href='test_files/bundle_common.css' media='screen' rel='stylesheet' type='text/css' />
+    <link href='test_files/bundle_gist.css' media='screen' rel='stylesheet' type='text/css' />
+    <script charset='utf-8' type='text/javascript'>
+      var GitHub = {}
+    </script>
+    <script src='test.js' type='text/javascript'></script>
+    <script src='test_files/jquery.js' type='text/javascript'></script>
+    <script src='test_files/bundle_common.js' type='text/javascript'></script>
+    <script src='test_files/bundle_gist.js' type='text/javascript'></script>
+    <link href='http://github.com/api/oembed?format=json&amp;url=http%3A%2F%2Fgist.github.com%2F566725' rel='alternate' title='gist: 566725' type='application/json+oembed' />
+    <script type='text/javascript'>
+      //<![CDATA[
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-3769691-4']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script');
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          ga.setAttribute('async', 'true');
+          document.documentElement.firstChild.appendChild(ga);
+        })();
+      //]]>
+    </script>
+    <script async='true' src='test_files/ga.js'></script>
+  </head>
+  <body class='usingMouse'>
+    <div id='main'>
+      <div id='header'>
+        <div class='site'>
+          <div class='logo'>
+            <a href='http://gist.github.com/'>
+              <img alt='gist' src='test_files/logo_gist.png' />
+            </a>
+          </div>
+          <div class='userbox'>
+            <div class='avatarname'>
+              <a href='http://github.com/gcao'>
+                <img alt='' height='20' src='test_files/6f67bf7db5209823d24a3720746047f6.jpg' width='20' />
+              </a>
+              <a class='name' href='http://github.com/gcao'>gcao</a>
+            </div>
+            <ul class='usernav'>
+              <li>
+                <a href='http://github.com'>Dashboard</a>
+              </li>
+              <li>
+                <a href='http://github.com/inbox'>Inbox</a>
+                <a class='unread_count' href='http://github.com/inbox'>0</a>
+              </li>
+              <li>
+                <a href='http://github.com/gcao'>Account Settings</a>
+              </li>
+              <li>
+                <a href='http://github.com/logout'>Log Out</a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.userbox -->
+          <div class='topsearch'>
+            <form action='/gists/search' id='top_search_form' method='get'>
+              <input class='search notnative placeholder' name='q' placeholder='Search Gists342200246' results='5' type='search' />
+              <input class='button' type='submit' value='Search' />
+              <input name='page' type='hidden' value='1' />
+            </form>
+            <ul class='nav'>
+              <li>
+                <a href='http://gist.github.com/'>New Gist</a>
+              </li>
+              <li>
+                <a href='http://gist.github.com/mine'>My Gists</a>
+              </li>
+              <li>
+                <a href='http://gist.github.com/starred'>Starred Gists</a>
+              </li>
+              <li>
+                <a href='http://gist.github.com/gists'>All Gists</a>
+              </li>
+              <li>
+                <a href='http://github.com'>Back to GitHub</a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.topsearch -->
+        </div>
+      </div>
+      <div class='site'>
+        <div class='secondary'>
+          <div id='owner'>
+            <div class='actor'>
+              <div class='gravatar'>
+                <img alt='' height='30' src='test_files/93bd250c06436d254229792b44b2d677.jpg' width='30' />
+              </div>
+              <div class='name'>
+                <a href='http://github.com/mnutt'>mnutt</a>
+                <span>(owner)</span>
+              </div>
+            </div>
+          </div>
+          <div class='fork-info' id='forks'>
+            <h3>Forks</h3>
+            <ul class='gists forks'>
+            </ul>
+          </div>
+          <div id='revisions'>
+            <h3>Revisions</h3>
+            <ul>
+              <li class='current'>
+                <img alt='' src='test_files/dot_green.png' />
+                <img alt='' src='test_files/dot_green.png' />
+                <img alt='' src='test_files/dot_green.png' />
+                <img alt='' src='test_files/dot_green.png' />
+                <img alt='' src='test_files/dot_red.png' />
+                <img alt='' src='test_files/dot_gray.png' />
+                <img alt='' src='test_files/dot_gray.png' />
+                <a class='id' href='http://gist.github.com/566725/636766f1a8510723ddaa5eef1c78cecd2054075a'>636766</a>
+                <a class='author' href='http://gist.github.com/mnutt'>mnutt</a>
+                <span class='date'>
+                  <abbr class='relatize relatized' title='2010-10-06 10:13:54'>October 06, 2010</abbr>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /.secondary -->
+        <div class='main'>
+          <div id='repos'>
+            <div class='repo public'>
+              <div class='title'>
+                <div class='path'>
+                  gist: 566725
+                  <a href='http://gist.github.com/gists/566725/download'>
+                    <img alt='Download_button' border='0' class='button' src='test_files/download_button.png' />
+                  </a>
+                  <a href='http://gist.github.com/fork/566725'>
+                    <img alt='fork' class='button' src='test_files/fork_button.png' />
+                  </a>
+                  <a href='http://gist.github.com/star/566725'>
+                    <img alt='star' class='button' src='test_files/star_button.png' />
+                  </a>
+                </div>
+                <div class='security public_security' style=''>
+                  <a href='#public_repo' rel='facebox'>
+                    <img alt='public' src='test_files/public.png' />
+                  </a>
+                </div>
+                <div class='hidden' id='private_repo'>
+                  <h2>Private Gist</h2><p> All pages are served over SSL and all pushing and pulling is done over SSH. No one may fork, clone, or view it unless they are given this private URL.</p><p>Every gist with this icon (<img src="test_files/private.png" alt="private">) is private.</p>
+                </div>
+                <div class='hidden' id='public_repo'>
+                  <h2>Public Gist</h2><p>Anyone may fork, clone, or view it.</p><p>Every repository with this icon (<img src="test_files/public.png" alt="public">) is public.</p>
+                </div>
+              </div>
+              <div class='meta'>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td class='label'>Description:</td>
+                      <td>
+                        <div class='description'>
+                          <span class='edit' id='gist-text-description'>How to use Rails 3.0's new notification system to inject custom log events</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class='label'>Public Clone URL:</td>
+                      <td>
+                        <a class='git_url_facebox' href='git://gist.github.com/566725.git' rel='#git-clone'>git://gist.github.com/566725.git</a>
+                        <div id='git-clone' style='display: none; min-width: 500px;'>
+                          Give this clone URL to anyone.
+                          <br />
+                          <code>git clone git://gist.github.com/566725.git gist-566725</code>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class='label'>Embed All Files:</td>
+                      <td>
+                        <a class='gist-embed-link' href='#'>show embed</a>
+                        <input class='gist-embed-box' size='25' style='display: none;' type='text' value='&lt;script src="http://gist.github.com/566725.js"&gt; &lt;/script&gt;' />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div id='files'>
+            <div class='file' id='file_instrument anything in rails 3.md'>
+              <div class='meta clearfix'>
+                <div class='info'>
+                  <span class='code'>
+                    Instrument Anything in Rails 3.md
+                    <a href='#file_instrument%20anything%20in%20rails%203.md'>#</a>
+                  </span>
+                </div>
+                <div class='actions'>
+                  <div id='gist-embed' style='display: inline;'>
+                    <a class='gist-embed-link' href='#'>embed</a>
+                    <input class='gist-embed-box' size='25' style='display: none;' type='text' value='&lt;script src="http://gist.github.com/566725.js?file=Instrument%20Anything%20in%20Rails%203.md"&gt;&lt;/script&gt;' />
+                  </div>
+                  <a href='http://gist.github.com/raw/566725/7d55736227e112d2811ccbc58af66e5acbf95e06/Instrument%20Anything%20in%20Rails%203.md'>raw</a>
+                </div>
+              </div>
+              <div class='blob' id='readme'>
+                <div class='wikistyle'>
+                  <h1>Instrument Anything in Rails 3</h1>
+                  <p>
+                    With Rails 3.0 released a few weeks ago I've migrated a few apps and
+                    I'm constantly finding useful new improvements.  One such improvement is
+                    the ability to log anything in the same way that Rails internally logs
+                    ActiveRecord and ActionView.  By default Rails 3 logs look slightly
+                    spiffier than those produced by Rails 2.3: (notice the second line has
+                    been cleaned up)
+                  </p>
+                  <pre><code>Started GET "/" for 127.0.0.1 at Mon Sep 06 01:07:11 -0400 2010&#x000A;  Processing by HomeController#index as HTML&#x000A;  User Load (0.2ms)  SELECT `users`.* FROM `users` WHERE (`users`.`id` = 3) LIMIT 1&#x000A;  CACHE (0.0ms)  SELECT `users`.* FROM `users` WHERE (`users`.`id` = 3) LIMIT 1&#x000A;Rendered layouts/_nav.html.erb (363.4ms)&#x000A;Rendered layouts/_nav.html.erb (1.1ms)&#x000A;Rendered layouts/_footer.html.erb (2.6ms)&#x000A;Rendered home/index.html.erb within layouts/application (503.6ms)&#x000A;Completed 200 OK in 510ms (Views: 507.9ms | ActiveRecord: 406.3ms)</code></pre>
+                  <p>
+                    This output format is very informative, but what if we're using
+                    MongoDB or CouchDB instead of ActiveRecord? What if our page has a Solr
+                    query that takes up a signification portion of the response time, and we
+                    want to break it out of the total?
+                  </p>
+                  <p>
+                    The app I'm working on at Market.io uses Solr extensively via the
+                    <a href='http://delsolr.rubyforge.org/'>delsolr</a>
+                    gem.  Since delsolr is not Rails-specific, I have created a wrapper
+                    around the service calls to add hooks.  If I wanted to log Solr queries I
+                    could just add
+                    <code>Rails.logger.info "Solr query: #{query}"</code>
+                    but now Rails provides a better way.
+                  </p>
+                  <p>
+                    In Rails 3, logging has been abstracted into
+                    <a href='http://rdoc.info/github/rails/rails/v3.0.0/ActiveSupport/Notifications'>ActiveSupport::Notifications</a>,
+                    which publishes logging events, and
+                    <a href='http://rdoc.info/github/rails/rails/v3.0.0/ActiveSupport/LogSubscriber'>ActiveSupport::LogSubscriber</a>,
+                    which consumes the events and logs the output.  This abstraction lets
+                    any number of entities publish notifications. (I'm calling those
+                    entities "services" for the purpose of this article, but any call can be
+                    instrumented.)
+                  </p>
+                  <p>
+                    ActiveRecord provides an excellent example of how to subscribe to
+                    notifications.  I've adapted it to delsolr with minimal changes.  First
+                    we tell Rails what to instrument:
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- cache end -->
+          </div>
+          <div id='comments'>
+            <h2>1 Comment</h2>
+            <div class='new-comments'>
+              <div class='comment gist-comment' id='gistcomment-11340'>
+                <div class='cmeta'>
+                  <p class='author'>
+                    <span class='gravatar'>
+                      <img alt='' height='20' src='test_files/b27766abb4ad9958522a340db11b5ffa.jpg' width='20' />
+                    </span>
+                    <strong class='author'>
+                      <a href='http://gist.github.com/unimatrixZxero'>unimatrixZxero</a>
+                    </strong>
+                    <em>
+                      <a href='#gistcomment-11340'>commented</a>
+                    </em>
+                  </p>
+                  <p class='info'>
+                    <em class='date'>
+                      <abbr class='relatize relatized' title='2010-10-08 04:32:25'>5 days ago</abbr>
+                    </em>
+                    <span class='icon'></span>
+                  </p>
+                </div>
+                <div class='body'>
+                  <div class='formatted-content'>
+                    <div class='content-body wikistyle'>
+                      <p>Thanx for sharing.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <form action='/566725/comment' method='post'>
+              <div style='margin: 0pt; padding: 0pt;'>
+                <input name='authenticity_token' type='hidden' value='a5bcb6359cb829762edbd920e08531c66d7c89cf' />
+              </div>
+              <p class='comment-form-error' style='display: none;'>You must write something to leave a comment</p>
+              <div class='comment-form previewable-comment-form'>
+                <p class="help">Comments are parsed with <a href="http://github.github.com/github-flavored-markdown/" target="_blank">GitHub Flavored Markdown</a></p>
+                <ul class='tabs inline-tabs'>
+                  <li>
+                    <a action='write' class='selected' href='#write_bucket_554'>Write</a>
+                  </li>
+                  <li>
+                    <a action='preview' href='#preview_bucket_554'>Preview</a>
+                  </li>
+                </ul>
+                <div class='tab-content' id='write_bucket_554' style='display: block;'>
+                  <textarea id='comment_body_554' name='comment[body]' tabindex='1'></textarea>
+                </div>
+                <div class='new-comments tab-content' id='preview_bucket_554' style='display: none;'>
+                  <div class='comment normal-comment' id='openstruct-69981417896720'>
+                    <div class='cmeta'>
+                      <p class='author'>
+                        <span class='gravatar'>
+                          <img alt='' height='20' src='test_files/6f67bf7db5209823d24a3720746047f6.jpg' width='20' />
+                        </span>
+                        <strong class='author'>
+                          <a href='http://gist.github.com/gcao'>gcao</a>
+                        </strong>
+                        <em>
+                          <a href='#openstruct-69981417896720'>
+                            commented
+                          </a>
+                        </em>
+                      </p>
+                      <p class='info'>
+                        <em class='date'>
+                          <abbr class='relatize relatized' title='Fri Oct 29 16:23:59 -0400 2010'>just now</abbr>
+                        </em>
+                        <span class='icon'></span>
+                      </p>
+                    </div>
+                    <div class='body'>
+                      <div class='formatted-content'>
+                        <div class='content-body wikistyle'>
+                          <p>Nothing to preview</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class='form-actions'>
+                <button class='classy' type='submit'>
+                  <span>Add Gist Comment</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /.main -->
+      </div>
+      <!-- site -->
+      <div class='push'></div>
+    </div>
+    <div id='footer'>
+      <div class='site'>
+        <div class='info'>
+          <div class='logo'>
+            <a href='http://github.com/'>
+              <img alt='GitHub' src='test_files/logo_white.png' />
+            </a>
+          </div>
+          <div class='more'>
+            <div class='links'>
+              <a href='http://github.com/blog'>
+                <strong>Blog</strong>
+              </a>
+              |
+              <a href='http://support.github.com/?sso=_-D9qfwBNALVWtVhGCwVCzX3G3akBoO36XQ8M-kMER3mItaw2V5DpBTBMMTZiae4Dy18bMl-4CJK9MAEfFy_AVxwQJCk9XLtmSniAFz-VwjxAgL_Y1a_AZCRN_NnN6BhwhzBiVv89zTITQLYmRgcKqL4266Twjvpq5OnO8TG7gQyEaDwrnI5NdirdlFH1PuBGunRV50LqokexyIfWDGT-Le8TR22PIsWgDPi9S-Hwhg'>Support</a>
+              |
+              <a href='http://github.com/contact'>Contact</a>
+              |
+              <a href='http://github.com/site/privacy'>Privacy</a>
+              |
+              <a href='http://github.com/site/terms'>Terms of Service</a>
+            </div>
+            <div class='company'>
+              ©
+              2010
+              GitHub Inc.
+              All rights reserved.
+            </div>
+          </div>
+        </div>
+        <div class='sponsor'>
+          <div>
+            Powered by the
+            <a href='http://www.rackspace.com/'>
+              Dedicated
+              Servers
+            </a>
+            and
+            <br />
+            <a href='http://www.rackspacecloud.com/'>
+              Cloud
+              Computing
+            </a>
+            of Rackspace Hosting
+            <span>®</span>
+          </div>
+          <a href='http://www.rackspace.com/'>
+            <img alt='Dedicated Server' src='test_files/rackspace_logo.png' />
+          </a>
+        </div>
+      </div>
+    </div>
+    <script type='text/javascript'>
+      //<![CDATA[
+        window._auth_token = "a5bcb6359cb829762edbd920e08531c66d7c89cf";
+      //]]>
+    </script>
+    <div id='facebox' style='display: none;'>
+      <div class='popup'>
+        <div class='content'></div>
+        <a class='close' href='#'>
+          <img class='close_image' src='test_files/closelabel.png' title='close' />
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

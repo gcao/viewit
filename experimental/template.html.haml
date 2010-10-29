@@ -47,7 +47,7 @@
                 %a{:href => logout_url}= messages.logout_link_label
           / /.userbox
           .topsearch
-            %form#top_search_form{:action => gist_search_form.action, :method => gist_search_form._method}
+            %form#top_search_form{:action => gist_search_url, :method => "get"}
               %input.search.notnative.placeholder{:name => "q", :placeholder => messages.gist_search_input_floating_text, :results => "5", :type => "search"}/
               %input.button{:type => "submit", :value => "Search"}/
               %input{:name => "page", :type => "hidden", :value => "1"}/

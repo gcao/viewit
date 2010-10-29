@@ -48,9 +48,9 @@ task :default do
   require 'json'
   require 'viewit'
   
-  template = File.read("spec/template.html.haml")
-  json     = JSON.parse(File.read("spec/test.json"))
-  output   = "spec/test-output.html"
+  template = File.read("experimental/template.html.haml")
+  json     = JSON.parse(File.read("experimental/test.json"))
+  output   = "experimental/test-output.html"
   
   puts "==================\n\n"
   puts Viewit.compile(template).apply(json).render(output)
