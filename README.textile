@@ -51,6 +51,10 @@ h3. Prototype of above idea
    except decorational or background images)
  * Write ruby code to re-build the page (the purpose is to have same DOM structure)
  * Refactor ruby code to investigate benefits and potentials of this idea
+ * Pass data model to web page through <script> tag, use Javascript to replace form 
+   actions
+ * Convert ruby code to Javascript and construct the whole page through Javascript
+
 
 h2. Note on Patches/Pull Requests
  
