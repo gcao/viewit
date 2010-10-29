@@ -75,7 +75,7 @@
           #forks.fork-info
             %h3= messages.forks_label
             %ul.gists.forks
-              - current_gist.forks do |fork|
+              - current_gist.forks.each do |fork|
                 %li= render_with_hash(messages.gist_item,     |
                   :_id => current_gist._id,                   |
                   :user => current_gist.owner.username,       |
