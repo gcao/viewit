@@ -35,6 +35,7 @@ end
 class Object
   def render_with_hash template, hash
     return 'TEMPLATE_NOT_DEFINED' if template.nil?
+    template = template.input if template.is_a? Viewit::DataItem
     Erubis::Eruby.new(template).result(hash)
   end
 end

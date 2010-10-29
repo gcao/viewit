@@ -48,6 +48,28 @@
           "view_url": "http://gist.github.com/mnutt"
         }
       }
+    ],
+    "files": [
+      {
+        "_id": "file_instrument anything in rails 3.md",
+        "title": "Instrument Anything in Rails 3.md",
+        "url": "#file_instrument%20anything%20in%20rails%203.md",
+        "raw_url": "http://gist.github.com/raw/566725/7d55736227e112d2811ccbc58af66e5acbf95e06/Instrument%20Anything%20in%20Rails%203.md",
+        "embed_code": "&lt;script src=&quot;http://gist.github.com/566725.js?file=Instrument%20Anything%20in%20Rails%203.md&quot;&gt;&lt;/script&gt;"
+      }
+    ],
+    "comments": [
+      {
+        "_id": "11340",
+        "author": {
+          "username": "unimatrixZxero",
+          "gists_url": "http://gist.github.com/unimatrixZxero",
+          "gravatar": "test_files/b27766abb4ad9958522a340db11b5ffa.jpg"
+        },
+        "created_at": "2010-10-08 04:32:25",
+        "created_at_alias": "5 days ago",
+        "body": "<p>Thanx for sharing.</p>"
+      }
     ]
   },
   "gist_homepage_url": "http://gist.github.com/",
@@ -83,6 +105,15 @@
     "gist_item": "<a href=\"http://gist.github.com/<%= _id %>\">gist: <%= _id %></a> by <a href=\"<%= user_url %>\"><%= user %></a> <span class=\"description\"></span> <small>created <span class=\"date\"><abbr class=\"relatize relatized\" title=\"<%= created_at %>\"><%= created_at_alias %></abbr></span></small>",
     "revisions_label": "Revisions",
     "public_gist_desc": "<h2>Public Gist</h2><p>Anyone may fork, clone, or view it.</p><p>Every repository with this icon (<img src=\"test_files/public.png\" alt=\"public\">) is public.</p>",
-    "private_gist_desc": "<h2>Private Gist</h2><p> All pages are served over SSL and all pushing and pulling is done over SSH. No one may fork, clone, or view it unless they are given this private URL.</p><p>Every gist with this icon (<img src=\"test_files/private.png\" alt=\"private\">) is private.</p>"
+    "private_gist_desc": "<h2>Private Gist</h2><p> All pages are served over SSL and all pushing and pulling is done over SSH. No one may fork, clone, or view it unless they are given this private URL.</p><p>Every gist with this icon (<img src=\"test_files/private.png\" alt=\"private\">) is private.</p>",
+    "public_clone_label": "Public Clone URL:",
+    "public_clone_note": "Give this clone URL to anyone.",
+    "embed_label": "Embed All Files:",
+    "show_embed_label": "show embed",
+    "file_link_label": "#",
+    "file_embed_label": "embed",
+    "file_raw_link_label": "raw",
+    "commented_link_label": "commented",
+    "comments_header": "<%= comment_count %> Comment<% if comment_count > 1 %>s<% end %>"
   }
 }

@@ -78,6 +78,9 @@ module Viewit
           yield DataItem.create(item), i
         end
       end
+      
+      def size; @input.size; end
+      def length; @input.length; end
     end
   end
 end

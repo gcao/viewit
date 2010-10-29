@@ -123,17 +123,185 @@
                       %td.label Description:
                       %td
                         .description
-                          %span#gist-text-description.edit How to use Rails 3.0's new notification system to inject custom log events
+                          %span#gist-text-description.edit= current_gist.description
                     %tr
-                      %td.label Public Clone URL:
+                      %td.label= messages.public_clone_label
                       %td
-                        %a.git_url_facebox{:href => "git://gist.github.com/566725.git", :rel => "#git-clone"} git://gist.github.com/566725.git
+                        %a.git_url_facebox{:href => current_gist.public_clone_url, :rel => "#git-clone"}= current_gist.public_clone_url
                         #git-clone{:style => "display: none; min-width: 500px;"}
-                          Give this clone URL to anyone.
+                          = messages.public_clone_note
                           %br/
-                          %code git clone git://gist.github.com/566725.git gist-566725
+                          %code git clone #{current_gist.public_clone_url} gist-#{current_gist._id}
                     %tr
-                      %td.label Embed All Files:
+                      %td.label= messages.embed_label
                       %td
-                        %a.gist-embed-link{:href => "#"} show embed
-                        %input.gist-embed-box{:size => "25", :style => "display: none;", :type => "text", :value => "&lt;script src=&quot;http://gist.github.com/566725.js&quot;&gt; &lt;/script&gt;"}/
+                        %a.gist-embed-link{:href => "#"}= messages.show_embed_label
+                        %input.gist-embed-box{:size => "25", :style => "display: none;", :type => "text", :value => "&lt;script src=&quot;http://gist.github.com/#{current_gist._id}.js&quot;&gt; &lt;/script&gt;"}/
+          #files
+            - current_gist.files.each do |file|
+              .file{:id => file._id}
+                .meta.clearfix
+                  .info
+                    %span.code
+                      = file.title
+                      %a{:href => file.url}= messages.file_link_label
+                  .actions
+                    #gist-embed{:style => "display: inline;"}
+                      %a.gist-embed-link{:href => "#"}= messages.file_embed_label
+                      %input.gist-embed-box{:size => "25", :style => "display: none;", :type => "text", :value => file.embed_code}/
+                    %a{:href => file.raw_url}= messages.file_raw_link_label
+                #readme.blob
+                  .wikistyle
+                    %h1 Instrument Anything in Rails 3
+                    %p
+                      With Rails 3.0 released a few weeks ago I've migrated a few apps and
+                      I'm constantly finding useful new improvements.  One such improvement is
+                      the ability to log anything in the same way that Rails internally logs
+                      ActiveRecord and ActionView.  By default Rails 3 logs look slightly
+                      spiffier than those produced by Rails 2.3: (notice the second line has
+                      been cleaned up)
+                    %pre
+                      %code
+                        :preserve
+                          Started GET "/" for 127.0.0.1 at Mon Sep 06 01:07:11 -0400 2010
+                            Processing by HomeController#index as HTML
+                            User Load (0.2ms)  SELECT `users`.* FROM `users` WHERE (`users`.`id` = 3) LIMIT 1
+                            CACHE (0.0ms)  SELECT `users`.* FROM `users` WHERE (`users`.`id` = 3) LIMIT 1
+                          Rendered layouts/_nav.html.erb (363.4ms)
+                          Rendered layouts/_nav.html.erb (1.1ms)
+                          Rendered layouts/_footer.html.erb (2.6ms)
+                          Rendered home/index.html.erb within layouts/application (503.6ms)
+                          Completed 200 OK in 510ms (Views: 507.9ms | ActiveRecord: 406.3ms)
+                    %p
+                      This output format is very informative, but what if we're using
+                      MongoDB or CouchDB instead of ActiveRecord? What if our page has a Solr
+                      query that takes up a signification portion of the response time, and we
+                      want to break it out of the total?
+                    %p
+                      The app I'm working on at Market.io uses Solr extensively via the
+                      %a{:href => "http://delsolr.rubyforge.org/"} delsolr
+                      gem.  Since delsolr is not Rails-specific, I have created a wrapper
+                      around the service calls to add hooks.  If I wanted to log Solr queries I
+                      could just add
+                      %code Rails.logger.info "Solr query: \#{query}"
+                      but now Rails provides a better way.
+                    %p
+                      In Rails 3, logging has been abstracted into
+                      = succeed "," do
+                        %a{:href => "http://rdoc.info/github/rails/rails/v3.0.0/ActiveSupport/Notifications"} ActiveSupport::Notifications
+                      which publishes logging events, and
+                      = succeed "," do
+                        %a{:href => "http://rdoc.info/github/rails/rails/v3.0.0/ActiveSupport/LogSubscriber"} ActiveSupport::LogSubscriber
+                      which consumes the events and logs the output.  This abstraction lets
+                      any number of entities publish notifications. (I'm calling those
+                      entities "services" for the purpose of this article, but any call can be
+                      instrumented.)
+                    %p
+                      ActiveRecord provides an excellent example of how to subscribe to
+                      notifications.  I've adapted it to delsolr with minimal changes.  First
+                      we tell Rails what to instrument:
+            / cache end
+          #comments
+            %h2= render_with_hash(messages.comments_header, :comment_count => current_gist.comments.size)
+            .new-comments
+              - current_gist.comments.each do |comment|
+                .comment.gist-comment{:id => "gistcomment-#{comment._id}"}
+                  .cmeta
+                    %p.author
+                      %span.gravatar
+                        %img{:alt => "", :height => "20", :src => comment.author.gravatar, :width => "20"}/
+                      %strong.author
+                        %a{:href => comment.author.gists_url}= comment.author.username
+                      %em
+                        %a{:href => "#gistcomment-#{comment._id}"}= messages.commented_link_label
+                    %p.info
+                      %em.date
+                        %abbr.relatize.relatized{:title => comment.created_at}= comment.created_at_alias
+                      %span.icon
+                  .body
+                    .formatted-content
+                      .content-body.wikistyle
+                        = comment.body
+            %form{:action => "/566725/comment", :method => "post"}
+              %div{:style => "margin: 0pt; padding: 0pt;"}
+                %input{:name => "authenticity_token", :type => "hidden", :value => "a5bcb6359cb829762edbd920e08531c66d7c89cf"}/
+              %p.comment-form-error{:style => "display: none;"} You must write something to leave a comment
+              .comment-form.previewable-comment-form
+                %p.help
+                  Comments are parsed with
+                  %a{:href => "http://github.github.com/github-flavored-markdown/", :target => "_blank"} GitHub Flavored Markdown
+                %ul.tabs.inline-tabs
+                  %li
+                    %a.selected{:action => "write", :href => "#write_bucket_554"} Write
+                  %li
+                    %a{:action => "preview", :href => "#preview_bucket_554"} Preview
+                #write_bucket_554.tab-content{:style => "display: block;"}
+                  %textarea#comment_body_554{:name => "comment[body]", :tabindex => "1"}
+                #preview_bucket_554.new-comments.tab-content{:style => "display: none;"}
+                  #openstruct-69981417896720.comment.normal-comment
+                    .cmeta
+                      %p.author
+                        %span.gravatar
+                          %img{:alt => "", :height => "20", :src => "test_files/6f67bf7db5209823d24a3720746047f6_002.jpg", :width => "20"}/
+                        %strong.author
+                          %a{:href => "http://gist.github.com/gcao"} gcao
+                        %em
+                          %a{:href => "#openstruct-69981417896720"}
+                            commented
+                      %p.info
+                        %em.date
+                          %abbr.relatize.relatized{:title => "2010-10-13 19:38:34"} just now
+                        %span.icon
+                    .body
+                      .formatted-content
+                        .content-body.wikistyle
+                          %p Nothing to preview
+              .form-actions
+                %button.classy{:type => "submit"}
+                  %span Add Gist Comment
+        / /.main
+      / site
+      .push
+    #footer
+      .site
+        .info
+          .logo
+            %a{:href => "http://github.com/"}
+              %img{:alt => "GitHub", :src => "test_files/logo_white.png"}/
+          .more
+            .links
+              %a{:href => "http://github.com/blog"}
+                %strong Blog
+              |
+              %a{:href => "http://support.github.com/?sso=_-D9qfwBNALVWtVhGCwVCzX3G3akBoO36XQ8M-kMER3mItaw2V5DpBTBMMTZiae4Dy18bMl-4CJK9MAEfFy_AVxwQJCk9XLtmSniAFz-VwjxAgL_Y1a_AZCRN_NnN6BhwhzBiVv89zTITQLYmRgcKqL4266Twjvpq5OnO8TG7gQyEaDwrnI5NdirdlFH1PuBGunRV50LqokexyIfWDGT-Le8TR22PIsWgDPi9S-Hwhg"} Support
+              |
+              %a{:href => "http://github.com/contact"} Contact
+              |
+              %a{:href => "http://github.com/site/privacy"} Privacy
+              |
+              %a{:href => "http://github.com/site/terms"} Terms of Service
+            .company
+              ©
+              2010
+              GitHub Inc.
+              All rights reserved.
+        .sponsor
+          %div
+            Powered by the
+            %a{:href => "http://www.rackspace.com/"}
+              Dedicated
+              Servers
+            and
+            %br/
+            %a{:href => "http://www.rackspacecloud.com/"}
+              Cloud
+              Computing
+            of Rackspace Hosting
+            %span ®
+          %a{:href => "http://www.rackspace.com/"}
+            %img{:alt => "Dedicated Server", :src => "test_files/rackspace_logo.png"}/
+    :javascript
+      window._auth_token = "a5bcb6359cb829762edbd920e08531c66d7c89cf"    #facebox{:style => "display: none;"}
+      .popup
+        .content         %a.close{:href => "#"}
+          %img.close_image{:src => "test_files/closelabel.png", :title => "close"}/
