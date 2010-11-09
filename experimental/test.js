@@ -100,6 +100,7 @@ var data = {
     "public_gist_desc": "<h2>Public Gist</h2><p>Anyone may fork, clone, or view it.</p><p>Every repository with this icon (<img src=\"test_files/public.png\" alt=\"public\">) is public.</p>",
     "private_gist_desc": "<h2>Private Gist</h2><p> All pages are served over SSL and all pushing and pulling is done over SSH. No one may fork, clone, or view it unless they are given this private URL.</p><p>Every gist with this icon (<img src=\"test_files/private.png\" alt=\"private\">) is private.</p>",
     "public_clone_label": "Public Clone URL:",
+    "description_label": "Description: ",
     "public_clone_note": "Give this clone URL to anyone.",
     "embed_label": "Embed All Files:",
     "show_embed_label": "show embed",
