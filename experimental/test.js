@@ -1,4 +1,4 @@
-var data = {
+var page_data = {
   "homepage_url": "http://github.com",
   "logout_url": "http://github.com/logout",
   "title": "gist: 566725 - How to use Rails 3.0's new notification system to inject custom log events- GitHub",
@@ -59,7 +59,8 @@ var data = {
         "title": "Instrument Anything in Rails 3.md",
         "url": "#file_instrument%20anything%20in%20rails%203.md",
         "raw_url": "http://gist.github.com/raw/566725/7d55736227e112d2811ccbc58af66e5acbf95e06/Instrument%20Anything%20in%20Rails%203.md",
-        "embed_code": "&lt;script src=&quot;http://gist.github.com/566725.js?file=Instrument%20Anything%20in%20Rails%203.md&quot;&gt;&lt;/script&gt;"
+        "embed_code": "&lt;script src=&quot;http://gist.github.com/566725.js?file=Instrument%20Anything%20in%20Rails%203.md&quot;&gt;&lt;/script&gt;",
+        "body_url": "gist-566725_1.html"
       }
     ],
     "comments": [

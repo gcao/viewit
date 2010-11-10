@@ -1,7 +1,9 @@
 $(document).ready(function(){
-  simpleUpdate('#forks ul', 'fork', data.current_gist.forks);
-  simpleUpdate('#revisions ul', 'revision', data.current_gist.revisions);
-  simpleUpdate('#repos', 'gist_summary', data);
+  simpleUpdate('#forks ul', 'fork', page_data.current_gist.forks);
+  simpleUpdate('#revisions ul', 'revision', page_data.current_gist.revisions);
+  simpleUpdate('#repos', 'gist_summary', page_data);
+  updateGistFiles(page_data);
+  updateComments(page_data);
 });
 
 function simpleUpdate(path, template, data) {
@@ -77,7 +79,69 @@ Jaml.register("gist_summary", function(data){
             td({cls: "label"}, messages.embed_label),
             td(
               a({cls: "gist-embed-link", href: "#"}, messages.show_embed_label),
-              input({cls: "gist-embed-box", size: "25", style: "display: none;", type: "text", value: "&lt;script src=&quot;http://gist.github.com/" + gist._id + ".js&quot;&gt; &lt;/script&gt;"})))))))
+              input({cls: "gist-embed-box", size: "25", style: "display: none;", type: "text", value: "&lt;script src=&quot;http://gist.github.com/" + gist._id + ".js&quot;&gt; &lt;/script&gt;"})))))));
+});
+
+function updateGistFiles(data) {
+  var files = [];
+  $.each(data.current_gist.files, function(){
+    files.push({file: this, messages: data.messages});
+  });
+  simpleUpdate('#files', 'gist_file', files);
+  $.each(data.current_gist.files, function(i){
+    $("#files div.wikistyle:eq(" + i + ")").load(this.body_url);
+  });
+}
+
+Jaml.register("gist_file", function(data){
+  var file = data.file;
+  var messages = data.messages;
+  div({cls: 'file', id: file._id},
+    div({cls: "meta clearfix"},
+      div({cls: "info"},
+        span({cls: "code"},
+          file.title,
+          a({href: file.url}, "#"))),
+      div({cls: "actions"},
+        div({id: "gist-embed", style: "display: inline;"},
+          a({cls: "gist-embed-link", href: "#"}, messages.file_embed_label),
+          input({cls: "gist-embed-box", size: "25", style: "display: none;", type: "text", value: file.embed_code})),
+        a({href: file.raw_url}, messages.file_raw_label))),
+    div({id: "readme", cls: "blob"},
+      div({cls: "wikistyle"})));
+});
+
+function updateComments(data) {
+  var commentCount = data.current_gist.comments.length;
+  var text = commentCount + " Comment";
+  if (commentCount > 1) text += "s";
+  $('#comments h2').text(text);
+  var comments = [];
+  $.each(data.current_gist.comments, function() {
+    comments.push({comment: this, messages: data.messages});
+  });
+  simpleUpdate('#comments .new-comments', 'gist_comment', comments);
+}
+
+Jaml.register("gist_comment", function(data){
+  var comment = data.comment;
+  var messages = data.messages;
+  div({id: "gistcomment-" + comment._id, cls: "comment gist-comment"},
+    div({cls: "cmeta"},
+      p({cls: "author"},
+        span({cls: "gravatar"},
+          img({alt: "", height: "20", src: comment.author.gravatar, width: "20"})),
+        strong({cls: "author"},
+          a({href: comment.author.gists_url}, comment.author.username)),
+        em(
+          a({href: "#gistcomment-" + comment._id}, "commented"))),
+      p({cls: "info"},
+        em({cls: "date"},
+          abbr({cls: "relatize relatized", title: comment.created_at}, comment.created_at_alias)),
+        span({cls: "icon"}))),
+    div({cls: "body"},
+      div({cls: "formatted-content"},
+        div({cls: "content-body wikistyle"}, comment.body))));
 });
 
 // changes is a String like '++--**'

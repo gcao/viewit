@@ -1,0 +1,40 @@
+<h1>Instrument Anything in Rails 3</h1>
+<p>
+  With Rails 3.0 released a few weeks ago I've migrated a few apps and
+  I'm constantly finding useful new improvements.  One such improvement is
+  the ability to log anything in the same way that Rails internally logs
+  ActiveRecord and ActionView.  By default Rails 3 logs look slightly
+  spiffier than those produced by Rails 2.3: (notice the second line has
+  been cleaned up)
+</p>
+<pre><code>Started GET "/" for 127.0.0.1 at Mon Sep 06 01:07:11 -0400 2010&#x000A;  Processing by HomeController#index as HTML&#x000A;  User Load (0.2ms)  SELECT `users`.* FROM `users` WHERE (`users`.`id` = 3) LIMIT 1&#x000A;  CACHE (0.0ms)  SELECT `users`.* FROM `users` WHERE (`users`.`id` = 3) LIMIT 1&#x000A;Rendered layouts/_nav.html.erb (363.4ms)&#x000A;Rendered layouts/_nav.html.erb (1.1ms)&#x000A;Rendered layouts/_footer.html.erb (2.6ms)&#x000A;Rendered home/index.html.erb within layouts/application (503.6ms)&#x000A;Completed 200 OK in 510ms (Views: 507.9ms | ActiveRecord: 406.3ms)</code></pre>
+<p>
+  This output format is very informative, but what if we're using
+  MongoDB or CouchDB instead of ActiveRecord? What if our page has a Solr
+  query that takes up a signification portion of the response time, and we
+  want to break it out of the total?
+</p>
+<p>
+  The app I'm working on at Market.io uses Solr extensively via the
+  <a href='http://delsolr.rubyforge.org/'>delsolr</a>
+  gem.  Since delsolr is not Rails-specific, I have created a wrapper
+  around the service calls to add hooks.  If I wanted to log Solr queries I
+  could just add
+  <code>Rails.logger.info "Solr query: #{query}"</code>
+  but now Rails provides a better way.
+</p>
+<p>
+  In Rails 3, logging has been abstracted into
+  <a href='http://rdoc.info/github/rails/rails/v3.0.0/ActiveSupport/Notifications'>ActiveSupport::Notifications</a>,
+  which publishes logging events, and
+  <a href='http://rdoc.info/github/rails/rails/v3.0.0/ActiveSupport/LogSubscriber'>ActiveSupport::LogSubscriber</a>,
+  which consumes the events and logs the output.  This abstraction lets
+  any number of entities publish notifications. (I'm calling those
+  entities "services" for the purpose of this article, but any call can be
+  instrumented.)
+</p>
+<p>
+  ActiveRecord provides an excellent example of how to subscribe to
+  notifications.  I've adapted it to delsolr with minimal changes.  First
+  we tell Rails what to instrument:
+</p>
