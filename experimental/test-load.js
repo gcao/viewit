@@ -1,4 +1,6 @@
 $(document).ready(function(){
+  // This does not work when there is no server involved? 
+  // $.getJSON("test.json", function(data){ window.page_data = data; });
   simpleUpdate('#forks ul', 'fork', page_data.current_gist.forks);
   simpleUpdate('#revisions ul', 'revision', page_data.current_gist.revisions);
   simpleUpdate('#repos', 'gist_summary', page_data);
