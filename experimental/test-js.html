@@ -125,63 +125,8 @@
             <h2>0 Comment</h2>
             <div class='new-comments'>
             </div>
-            <form action='/566725/comment' method='post'>
-              <div style='margin: 0pt; padding: 0pt;'>
-                <input name='authenticity_token' type='hidden' value='a5bcb6359cb829762edbd920e08531c66d7c89cf' />
-              </div>
-              <p class='comment-form-error' style='display: none;'>You must write something to leave a comment</p>
-              <div class='comment-form previewable-comment-form'>
-                <p class="help">Comments are parsed with <a href="http://github.github.com/github-flavored-markdown/" target="_blank">GitHub Flavored Markdown</a></p>
-                <ul class='tabs inline-tabs'>
-                  <li>
-                    <a action='write' class='selected' href='#write_bucket_554'>Write</a>
-                  </li>
-                  <li>
-                    <a action='preview' href='#preview_bucket_554'>Preview</a>
-                  </li>
-                </ul>
-                <div class='tab-content' id='write_bucket_554' style='display: block;'>
-                  <textarea id='comment_body_554' name='comment[body]' tabindex='1'></textarea>
-                </div>
-                <div class='new-comments tab-content' id='preview_bucket_554' style='display: none;'>
-                  <div class='comment normal-comment' id='openstruct-69981417896720'>
-                    <div class='cmeta'>
-                      <p class='author'>
-                        <span class='gravatar'>
-                          <img alt='' height='20' src='test_files/6f67bf7db5209823d24a3720746047f6.jpg' width='20' />
-                        </span>
-                        <strong class='author'>
-                          <a href='http://gist.github.com/gcao'>gcao</a>
-                        </strong>
-                        <em>
-                          <a href='#openstruct-69981417896720'>
-                            commented
-                          </a>
-                        </em>
-                      </p>
-                      <p class='info'>
-                        <em class='date'>
-                          <abbr class='relatize relatized' title='Fri Oct 29 16:23:59 -0400 2010'>just now</abbr>
-                        </em>
-                        <span class='icon'></span>
-                      </p>
-                    </div>
-                    <div class='body'>
-                      <div class='formatted-content'>
-                        <div class='content-body wikistyle'>
-                          <p>Nothing to preview</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class='form-actions'>
-                <button class='classy' type='submit'>
-                  <span>Add Gist Comment</span>
-                </button>
-              </div>
-            </form>
+            <div id='comments-form'>
+            </div>
           </div>
         </div>
         <!-- /.main -->

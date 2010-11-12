@@ -269,7 +269,7 @@ Jaml.Template.prototype = {
     "ul", "ol", "li", 
     "dl", "dt", "dd",
     "h1", "h2", "h3", "h4", "h5", "h6", "h7",
-    "form", "input", "label", "textarea", "small", "abbr", "code", "strong", "em"
+    "form", "input", "label", "textarea", "small", "abbr", "code", "strong", "em", "button"
   ]
 };
 

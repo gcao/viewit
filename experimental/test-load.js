@@ -6,6 +6,7 @@ $(document).ready(function(){
   simpleUpdate('#repos', 'gist_summary', page_data);
   updateGistFiles(page_data);
   updateComments(page_data);
+  simpleUpdate('#comments-form', 'gist_comment_form', page_data);
 });
 
 function simpleUpdate(path, template, data) {
@@ -144,6 +145,45 @@ Jaml.register("gist_comment", function(data){
     div({cls: "body"},
       div({cls: "formatted-content"},
         div({cls: "content-body wikistyle"}, comment.body))));
+});
+
+Jaml.register("gist_comment_form", function(data){
+  var gist = data.current_gist;
+  var author = data.logged_in_user;
+  var messages = data.messages;
+  form({action: "/" + gist._id + "/comment", method: "post"},
+    div({style: "margin: 0pt; padding: 0pt;"},
+      input({name: "authenticity_token", type: "hidden", value: data.authenticity_token})),
+    p({cls: "comment-form-error", style: "display: none;"}, messages.blank_comment_error),
+    div({cls: "comment-form previewable-comment-form"},
+      messages.comment_note,
+      ul({cls: "tabs inline-tabs"},
+        li(
+          a({cls: "selected", action: "write", href: "#write_bucket_comment"}, messages.write_comment_label)),
+        li(
+          a({action: "preview", href: "#preview_bucket_comment"}, messages.preview_comment_label))),
+      div({id: "write_bucket_comment", cls: "tab-content", style: "display: block;"},
+        textarea({id: "comment_body_comment", name: "comment[body]", tabindex: "1"})),
+      div({id: "preview_bucket_comment", cls: "new-comments tab-content", style: "display: none;"},
+        div({id: "openstruct-1", cls: "comment normal-comment"},
+          div({cls: "cmeta"},
+            p({cls: "author"},
+              span({cls: "gravatar"},
+                img({alt: "", height: "20", src: author.logo_url, width: "20"})),
+              strong({cls: "author"},
+                a({href: author.gists_url}, author.username)),
+              em(
+                a({href: "#openstruct-1"}, messages.commented_link_label))),
+            p({cls: "info"},
+              em({cls: "date"},
+                abbr({cls: "relatize relatized", title: new Date()}, messages.now_label)),
+              span({cls: "icon"}))),
+          div({cls: "body"},
+            div({cls: "formatted-content"},
+              div({cls: "content-body wikistyle"}, messages.nothing_to_preview)))))),
+    div({cls: "form-actions"},
+      button({cls: "classy", type: "submit"},
+        span(messages.comment_submit_label))))
 });
 
 // changes is a String like '++--**'
