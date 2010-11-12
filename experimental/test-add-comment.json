@@ -1,0 +1,14 @@
+{
+  "status": "success",
+  "comment": {
+    "_id": "11345",
+    "author": {
+      "username": "unimatrixZxero",
+      "gists_url": "http://gist.github.com/unimatrixZxero",
+      "gravatar": "test_files/b27766abb4ad9958522a340db11b5ffa.jpg"
+    },
+    "created_at": "2010-10-08 04:32:25",
+    "created_at_alias": "5 days ago",
+    "body": "<p>This is a test.</p>"
+  }
+}

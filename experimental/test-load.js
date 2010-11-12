@@ -1,6 +1,8 @@
 $(document).ready(function(){
-  // This does not work when there is no server involved? 
-  // $.getJSON("test.json", function(data){ window.page_data = data; });
+  getJSON("test.json", function(data){ 
+    window.page_data = data; 
+  });
+  console.log(window.page_data);
   simpleUpdate('#forks ul', 'fork', page_data.current_gist.forks);
   simpleUpdate('#revisions ul', 'revision', page_data.current_gist.revisions);
   simpleUpdate('#repos', 'gist_summary', page_data);
@@ -8,6 +10,15 @@ $(document).ready(function(){
   updateComments(page_data);
   simpleUpdate('#comments-form', 'gist_comment_form', page_data);
 });
+
+function getJSON(url, callback) {
+  $.ajaxSetup({async: false});
+  $.get(url, function(response) {
+    var json = eval("(" + response + ")");
+    callback.call(this, json);
+  });
+  $.ajaxSetup({async: true});
+}
 
 function simpleUpdate(path, template, data) {
   $(path).html(Jaml.render(template, data));
@@ -151,7 +162,7 @@ Jaml.register("gist_comment_form", function(data){
   var gist = data.current_gist;
   var author = data.logged_in_user;
   var messages = data.messages;
-  form({action: "/" + gist._id + "/comment", method: "post"},
+  form({action: "/" + gist._id + "/comment", method: "post", onsubmit: "addComment(); return false;"},
     div({style: "margin: 0pt; padding: 0pt;"},
       input({name: "authenticity_token", type: "hidden", value: data.authenticity_token})),
     p({cls: "comment-form-error", style: "display: none;"}, messages.blank_comment_error),
@@ -185,6 +196,23 @@ Jaml.register("gist_comment_form", function(data){
       button({cls: "classy", type: "submit"},
         span(messages.comment_submit_label))))
 });
+
+function addComment() {
+  if ($.trim($('.comment-form textarea').val()) == "") {
+    $('.comment-form-error').show();
+    return;
+  }
+  
+  $('.comment-form-error').hide();
+  $.getJSON('test-add-comment.json', function(data){
+    if (data.status == 'success') {
+      $('#comments .new-comments').append(Jaml.render('gist_comment', {
+        comment: data.comment,
+        messages: page_data.messages
+      }));
+    }
+  });
+}
 
 // changes is a String like '++--**'
 function renderChanges(changes){
