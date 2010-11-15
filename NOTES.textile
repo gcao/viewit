@@ -1,1 +1,28 @@
  * How to avoid property name and method name collision: e.g. method, size, length
+
+h3. Jaml ideas
+
+ * helper functions for id/class, e.g.
+ <code>
+   id("a").cls("b").div("xyz")
+   or
+   div(id("a"), cls("b"), "xyz")
+   In stead of
+   div({id: "a", cls: "b"}, "xyz")
+ </code>
+ * Take functions in place of values, e.g.
+ <code>
+   div({style: function(data) {data.styles} }, function(data) { data.content })
+   var styles = function(data) {data.styles};
+   var content = function(data) { data.content };
+   div({style: styles}, content); // styles and content are references to functions
+ </code>
+ * Special helpers for if/if_else/for, e.g.
+ <code>
+   div(_if(condition, "a", "b", "c"))
+   div(_if_else(condition, ["a", "b", "c"], ["d", "e", "f"])
+   div(_each(array, function(item, i, array){ 
+     div(item)
+   })
+ </code>
+ * A large template can be divided into small pieces. HOW?

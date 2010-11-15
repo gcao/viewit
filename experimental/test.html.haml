@@ -533,6 +533,49 @@
                   .formatted-content
                     .content-body.wikistyle
                       %p Thanks :)
+              #gistcomment-14033.comment.gist-comment.gist-owner-tag.adminable
+                .cmeta
+                  %p.author
+                    %span.gravatar
+                      %img{:alt => "", :height => "20", :src => "https://secure.gravatar.com/avatar/6f67bf7db5209823d24a3720746047f6?s=140&amp;d=https%3A%2F%2Fgithub.com%2Fimages%2Fgravatars%2Fgravatar-140.png", :width => "20"}/
+                    %strong.author
+                      %a{:href => "/gcao"} gcao
+                    %em
+                      %a{:href => "#gistcomment-14033"} commented
+                    %span.tag gist owner
+                  %p.info
+                    %em.date
+                      %abbr.relatize{:title => "2010-11-15 06:36:21"} Mon Nov 15 06:36:21 -0800 2010
+                .body
+                  %p.error{:style => "display:none"}
+                    There was a problem with your request, please try again
+                  .formatted-content
+                    %ul.actions
+                      %li
+                        %a.minibutton.btn-edit.edit-button{:href => "#"}
+                          %span Edit
+                      %li
+                        %a.minibutton.btn-delete.delete-button{:href => "#"}
+                          %span Delete
+                    .content-body.wikistyle
+                      %p
+                        Test again
+                  .context-loader{:style => "display:none"}
+                    Sending Request…
+                  .form-content{:style => "display:none"}
+                    %form#edit_gist_comment_14033{:action => "/459949/comment/14033", :method => "post"}
+                      %div{:style => "margin:0;padding:0"}
+                        %input{:name => "_method", :type => "hidden", :value => "put"}/
+                        %input{:name => "authenticity_token", :type => "hidden", :value => "95d0a0ea0527b6defc3db51b5262cda9d76ef0e5"}/
+                      %textarea#gist_comment_body{:cols => "40", :name => "gist_comment[body]", :rows => "20", :tabindex => "100"}
+                        :preserve
+                          
+                          Test again
+                      .form-actions
+                        %a.minibutton.danger.cancel{:href => "#"}
+                          %span Cancel
+                        %button.minibutton{:tabindex => "100", :type => "submit"}
+                          %span Update Comment
             %form{:action => "/566725/comment", :method => "post"}
               %div{:style => "margin: 0pt; padding: 0pt;"}
                 %input{:name => "authenticity_token", :type => "hidden", :value => "a5bcb6359cb829762edbd920e08531c66d7c89cf"}/

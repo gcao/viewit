@@ -137,6 +137,7 @@ function updateComments(data) {
   simpleUpdate('#comments .new-comments', 'gist_comment', comments);
 }
 
+// Update this based on the new comment in test.html.haml - update/delete actions are included
 Jaml.register("gist_comment", function(data){
   var comment = data.comment;
   var messages = data.messages;
@@ -204,12 +205,20 @@ function addComment() {
   }
   
   $('.comment-form-error').hide();
-  $.getJSON('test-add-comment.json', function(data){
+  getJSON('test-add-comment.json', function(data){
     if (data.status == 'success') {
       $('#comments .new-comments').append(Jaml.render('gist_comment', {
         comment: data.comment,
         messages: page_data.messages
       }));
+    }
+  });
+}
+
+function deleteComment(id) {
+  getJSON('test-delete-comment.json', function(data){
+    if (data.status == 'success') {
+      $('#comments comment-' + id).remove();
     }
   });
 }
