@@ -156,6 +156,13 @@
     "preview_comment_label": "Preview",
     "now_label": "just now",
     "nothing_to_preview": "<p>Nothing to preview</p>",
+    "gist_owner_label": "gist owner",
+    "edit_label": "Edit",
+    "delete_label": "Delete",
+    "cancel_label": "Cancel",
+    "sending_request": "Sending Request…",
+    "update_comment_label": "Update comment",
+    "bad_request": "There was a problem with your request, please try again",
     "comment_submit_label": "Add Gist Comment"
   }
 }

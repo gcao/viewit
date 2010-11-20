@@ -43,6 +43,8 @@ h3. Idea - separate data and presentation logic in web page
  * Since one model can be used in multiple places in views, it's probably a good idea
    to implement event(e.g. updated, created, deleted) and event handler to update multiple
    views at the same time.
+ * Use JSONPath to refer to objects in model (http://goessner.net/articles/JsonPath/index.html)
+ * Allow duplications in some cases
 
 h3. Prototype of above idea
 

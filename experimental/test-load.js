@@ -2,7 +2,6 @@ $(document).ready(function(){
   getJSON("test.json", function(data){ 
     window.page_data = data; 
   });
-  console.log(window.page_data);
   simpleUpdate('#forks ul', 'fork', page_data.current_gist.forks);
   simpleUpdate('#revisions ul', 'revision', page_data.current_gist.revisions);
   simpleUpdate('#repos', 'gist_summary', page_data);
@@ -141,7 +140,7 @@ function updateComments(data) {
 Jaml.register("gist_comment", function(data){
   var comment = data.comment;
   var messages = data.messages;
-  div({id: "gistcomment-" + comment._id, cls: "comment gist-comment"},
+  div({id: "gistcomment-" + comment._id, cls: "comment gist-comment gist-owner-tag adminable"},
     div({cls: "cmeta"},
       p({cls: "author"},
         span({cls: "gravatar"},
@@ -149,14 +148,36 @@ Jaml.register("gist_comment", function(data){
         strong({cls: "author"},
           a({href: comment.author.gists_url}, comment.author.username)),
         em(
-          a({href: "#gistcomment-" + comment._id}, "commented"))),
+          a({href: "#gistcomment-" + comment._id}, messages.commented_link_label)),
+        span({cls: "tag"}, messages.gist_owner_label)),
       p({cls: "info"},
         em({cls: "date"},
           abbr({cls: "relatize relatized", title: comment.created_at}, comment.created_at_alias)),
         span({cls: "icon"}))),
     div({cls: "body"},
+      p({cls: "error", style: "display:none"}, messages.bad_request),
       div({cls: "formatted-content"},
-        div({cls: "content-body wikistyle"}, comment.body))));
+        ul({cls: "actions"},
+          li(
+            a({cls: "minibutton btn-edit edit-button", href: "#"},
+              span(messages.edit_label))),
+          li(
+            a({cls: "minibutton btn-delete delete-button", href: "#"},
+              span(messages.delete_label)))),
+        div({cls: "content-body wikistyle"}, comment.body)),
+      div({cls: "context-loader", style: "display:none"}, messages.sending_request),
+      div({cls: "form-content", style: "display:none"},
+        form({id: "edit_gist_comment_14033", action: "/459949/comment/14033", method: "post"},
+          div({style: "margin:0;padding:0"},
+            input({name: "_method", type: "hidden", value: "put"}),
+            input({name: "authenticity_token", type: "hidden", value: data.authenticity_token})),
+          textarea({id: "gist_comment_body", cols: "40", name: "gist_comment[body]", rows: "20", tabindex: "100"},
+            comment.body),
+          div({cls: "form-actions"},
+            a({cls: "minibutton danger cancel", href: "#"},
+              span(messages.cancel_label)),
+            button({cls: "minibutton", tabindex: "100", type: "submit"},
+              span(messages.update_comment_label)))))))
 });
 
 Jaml.register("gist_comment_form", function(data){
