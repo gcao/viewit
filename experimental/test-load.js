@@ -8,6 +8,9 @@ $(document).ready(function(){
   updateGistFiles(page_data);
   updateComments(page_data);
   simpleUpdate('#comments-form', 'gist_comment_form', page_data);
+  
+  $('.gist-comment.adminable button[type=submit]').click(updateComment);
+  $('.gist-comment.adminable .delete-button').click(deleteComment);
 });
 
 function getJSON(url, callback) {
@@ -136,7 +139,6 @@ function updateComments(data) {
   simpleUpdate('#comments .new-comments', 'gist_comment', comments);
 }
 
-// Update this based on the new comment in test.html.haml - update/delete actions are included
 Jaml.register("gist_comment", function(data){
   var comment = data.comment;
   var messages = data.messages;
@@ -236,12 +238,46 @@ function addComment() {
   });
 }
 
-function deleteComment(id) {
-  getJSON('test-delete-comment.json', function(data){
+function updateComment() {
+  var elem = $(this);
+  var action = elem.parents('form').attr('action');
+  var id = action.substring(action.indexOf('/comment') + 9);
+  var body = elem.parents('form').children('textarea').val();
+  
+  getJSON('test-update-comment.json', function(data){
     if (data.status == 'success') {
-      $('#comments comment-' + id).remove();
+      $.each(page_data.current_gist.comments, function(index, comment) {
+        if (comment._id != id) comment.body = body;
+      });
+      elem.parents('.gist-comment').find('.content-body').html(body);
+      elem.parents('.form-content').hide().css('opacity', 1);
+      elem.parents('.gist-comment').find('.error').hide();
+      elem.parents('.gist-comment').find('.formatted-content').show();
     }
   });
+  
+  return false;
+}
+
+function deleteComment() {
+  if (!confirm("Are you sure you want to delete this?")) return;
+
+  var id = $(this).parents(".gist-comment").attr("id").substring(12);
+
+  getJSON('test-delete-comment.json', function(data){
+    if (data.status == 'success') {
+      // Remove comment from data model
+      var comments = [];
+      $.each(page_data.current_gist.comments, function(index, comment) {
+        if (comment._id != id) comments.push(comment);
+      });
+      page_data.current_gist.comments = comments;
+      // updateComments(page_data);
+      $('#gistcomment-' + id).remove();
+    }
+  });
+  
+  return false;
 }
 
 // changes is a String like '++--**'
